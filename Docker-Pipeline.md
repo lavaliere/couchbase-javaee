@@ -1,6 +1,6 @@
 
 This demo will show how to set up a Docker-based build and deploy pipeline in Jenkins using all open-source plugins.
-- Master in DEV@cloud [here | https://partnerdemo.ci.cloudbees.com/job/Docker%20Pipeline/job/Pipeline-Docker-Demo/]
+- Master in DEV@cloud [here](https://partnerdemo.ci.cloudbees.com/job/Docker%20Pipeline/job/Pipeline-Docker-Demo/)
 - Slave is an AWS EC2 instance with Docker, Maven, Git, and Java 7 installed on Amazon Linux connected to Jenkins with an SSH Connector
 
 # Required Plugins
