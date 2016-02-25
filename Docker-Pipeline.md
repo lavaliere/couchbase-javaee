@@ -22,14 +22,14 @@ This demo will show how to set up a Docker-based build and deploy pipeline in Je
 # Actual Flow
 - A Jenkins pipeline job builds this project
 - Any push to the source code will trigger pipeline to:
--- Pull the source code from this GitHub repostiory
--- Run the Maven tests
--- Build the application
--- Package the application in a Docker image using this repo's Dockerfile
--- Deploy the application's Docker image [to DockerHub with a "docker-demo" tag](https://hub.docker.com/r/lavaliere/couchbase/tags/)
--- Deploy the image to a staging server in Amazon's container service (ECS) and prompt for manual approval
--- Kill the previously running production container in ECS
--- Deploy the latest image into ECS
+- Pull the source code from this GitHub repostiory
+- Run the Maven tests
+- Build the application
+- Package the application in a Docker image using this repo's Dockerfile
+- Deploy the application's Docker image [to DockerHub with a "docker-demo" tag](https://hub.docker.com/r/lavaliere/couchbase/tags/)
+- Deploy the image to a staging server in Amazon's container service (ECS) and prompt for manual approval
+- Kill the previously running production container in ECS
+- Deploy the latest image into ECS
 
 # Additional Reading
 - [How to point to a custom registry (e.g. local)](http://documentation.cloudbees.com/docs/cje-user-guide/docker-workflow.html)
