@@ -13,12 +13,22 @@ This demo will show how to set up a Docker-based build and deploy pipeline in Je
 # Optional Plugins
 - Pipeline Stage View Plugin
 
-# Desired Flow
-- Use the project https://github.com/arun-gupta/couchbase-javaee
-- Any push to the source code should
--- Build the workspace
--- Run the tests
--- Build Docker image using Dockerfile
--- Deploy it to a local Docker registry
+# Required tools for build agent
+- Maven
+- Java
+- Git
+- Docker w/ running Docker daemon
+
+# Actual Flow
+- A Jenkins pipeline job builds this project
+- Any push to the source code will trigger pipeline to:
+-- Pull the source code from this GitHub repostiory
+-- Run the Maven tests
+-- Build the application
+-- Package the application in a Docker image using this repo's Dockerfile
+-- Deploy the application's Docker image [to DockerHub with a "docker-demo" tag](https://hub.docker.com/r/lavaliere/couchbase/tags/)
 -- Kill previously running container
 -- Start a new container using this image
+
+# Additional Reading
+- [How to point to a custom registry (e.g. local](http://documentation.cloudbees.com/docs/cje-user-guide/docker-workflow.html)
