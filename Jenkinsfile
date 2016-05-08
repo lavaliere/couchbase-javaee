@@ -22,4 +22,13 @@ node ('ec2'){
       sh 'ls -lart' 
       pkg.push 'docker-demo'
   }
+  
+  stage 'Stage image'
+  //Deploy image to staging in ECS
+      input 'Staging look okay?'
+  
+  stage 'Deploy to ECS'
+  //kill old container
+  //deploy new container
+
 }
