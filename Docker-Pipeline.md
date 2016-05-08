@@ -35,3 +35,4 @@ This demo will show how to set up a Docker-based build and deploy pipeline in Je
 
 # Additional Reading
 - [How to point to a custom registry (e.g. local)](http://documentation.cloudbees.com/docs/cje-user-guide/docker-workflow.html)
+- [Setting up Jenkins slaves on AWS](https://www.cloudbees.com/blog/setting-jenkins-ec2-slaves)
