@@ -6,7 +6,7 @@ node ('ec2'){
   stage 'Test Code'  
   sh 'mvn install'
 
-  stage 'Build app'  
+  stage 'Build app' 
   //Running the maven build and archiving the war
   sh 'mvn install'
   archive 'target/*.war'
@@ -57,17 +57,17 @@ node ('ec2'){
         timeout(time: 5, unit: 'MINUTES') {
             waitUntil {
                 try {
-                    sh "curl http://52.200.92.100:8091"
+                    sh "curl http://52.200.92.100:8080"
                     return true
                 } catch (Exception e) {
                     return false
                 }
             }
         }
-        echo "couchbase#${env.BUILD_NUMBER} SUCCESSFULLY deployed to http://52.200.92.100:8091"
+        echo "couchbase#${env.BUILD_NUMBER} SUCCESSFULLY deployed to http://52.200.92.100:8080"
         }
     }
-        input 'Does staging http://52.200.92.100:8091 look okay?'
+        input 'Does staging http://52.200.92.100:8080 look okay?'
 
   
   stage 'Deploy to ECS'
