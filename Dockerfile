@@ -1,4 +1,4 @@
-FROM jboss/wildfly:latest
+FROM arungupta/wildfly-admin
 
 ADD target/couchbase-javaee.war /opt/jboss/wildfly/standalone/deployments/
 
