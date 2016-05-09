@@ -75,4 +75,3 @@ node ('ec2'){
   //deploy new container
 
 }
-

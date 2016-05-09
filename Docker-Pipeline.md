@@ -38,3 +38,4 @@ This demo will show how to set up a Docker-based build and deploy pipeline in Je
 - [Game of Life pipeline deployment to ECS](https://github.com/cyrille-leclerc/game-of-life/blob/amazon-ecs-pipeline/Jenkinsfile)
 - [Alternative approach to build pipeline with Jenkins and ECS](https://blogs.aws.amazon.com/application-management/post/Tx32RHFZHXY6ME1/Set-up-a-build-pipeline-with-Jenkins-and-Amazon-ECS)
 - [Creating an ECS cluster with ELB instead of static instances](http://www.ybrikman.com/writing/2015/11/11/running-docker-aws-ground-up/)
+- [Building multiple containers with Docker Compose and pipeline](https://www.cloudbees.com/blog/docker-flow-proxy-%E2%80%93-demand-haproxy-service-discovery-and-reconfiguration-jenkins-pipeline)

@@ -1,5 +1,3 @@
-FROM jboss/wildfly
+FROM jboss/wildfly:latest
 
-COPY target/couchbase-javaee.war /opt/jboss/wildfly/standalone/deployments/couchbase-javaee.war
-
-EXPOSE 8091
+ADD target/couchbase-javaee.war /opt/jboss/wildfly/standalone/deployments/
