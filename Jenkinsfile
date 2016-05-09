@@ -16,7 +16,7 @@ node ('ec2'){
   def pkg = docker.build ('lavaliere/couchbase', '.')
 
   
-  stage 'Push Image'
+  stage 'Push Image to DockerHub'
   //Pushing the packaged app in image into DockerHub
   docker.withRegistry ('https://index.docker.io/v1/', 'ed17cd18-975e-4224-a231-014ecd23942b') {
       sh 'ls -lart' 
@@ -25,7 +25,50 @@ node ('ec2'){
   
   stage 'Stage image'
   //Deploy image to staging in ECS
-      input 'Staging look okay?'
+  def buildenv = docker.image('cloudbees/java-build-tools:0.0.7.1')
+  buildenv.inside {
+    wrap([$class: 'AmazonAwsCliBuildWrapper', credentialsId: '20f6b2e4-7fbe-4655-8b4b-9842ec81bce2', defaultRegion: 'us-east-1']) {
+        sh "aws ecs update-service --service staging --desired-count 0"
+        timeout(time: 5, unit: 'MINUTES') {
+            waitUntil {
+                sh "aws ecs describe-services --services staging > .amazon-ecs-service-status.json"
+
+                // parse `describe-services` output
+                def ecsServicesStatusAsJson = readFile(".amazon-ecs-service-status.json")
+                def ecsServicesStatus = new groovy.json.JsonSlurper().parseText(ecsServicesStatusAsJson)
+                println "$ecsServicesStatus"
+                def ecsServiceStatus = ecsServicesStatus.services[0]
+                return ecsServiceStatus.get('runningCount') == 0 && ecsServiceStatus.get('status') == "ACTIVE"
+            }
+        }
+        sh "aws ecs update-service --service staging --desired-count 1"
+        timeout(time: 5, unit: 'MINUTES') {
+            waitUntil {
+                sh "aws ecs describe-services --services staging > .amazon-ecs-service-status.json"
+
+                // parse `describe-services` output
+                def ecsServicesStatusAsJson = readFile(".amazon-ecs-service-status.json")
+                def ecsServicesStatus = new groovy.json.JsonSlurper().parseText(ecsServicesStatusAsJson)
+                println "$ecsServicesStatus"
+                def ecsServiceStatus = ecsServicesStatus.services[0]
+                return ecsServiceStatus.get('runningCount') == 0 && ecsServiceStatus.get('status') == "ACTIVE"
+            }
+        }
+        timeout(time: 5, unit: 'MINUTES') {
+            waitUntil {
+                try {
+                    sh "curl http://52.200.92.100:8091"
+                    return true
+                } catch (Exception e) {
+                    return false
+                }
+            }
+        }
+        echo "couchbase#${env.BUILD_NUMBER} SUCCESSFULLY deployed to http://52.200.92.100:8091"
+        }
+    }
+        input 'Does staging http://52.200.92.100:8091 look okay?'
+
   
   stage 'Deploy to ECS'
   //kill old container

@@ -1,21 +1,20 @@
 
 This demo will show how to set up a Docker-based build and deploy pipeline in Jenkins using all open-source plugins.
-- Master in AWS [here](http://52.72.46.249:8080) running Jenkins 2.1
-- Slave is an AWS EC2 instance with Docker, Maven, Git, and Java 7 installed on Amazon Linux connected to Jenkins with an SSH Connector
-- Staging server is [running in ECS](http://54.213.84.64:8091)
+- Master in AWS running Jenkins 2.1
+- Agent is an AWS EC2 instance with Docker, Maven, Git, and Java 8 installed on Ubuntu connected to Jenkins with an SSH Connector
+- Staging server is running in ECS
 - Deployment server is running in ECS
 
 # Required Plugins
 - CloudBees Docker Pipeline Plugin
 - Pipeline Plugin
 - Docker Plugin
-
-# Optional Plugins
 - Pipeline Stage View Plugin
 - CloudBees Docker Build and Publish Plugin
 - CloudBees Custom Build Environments Plugin
+- CloudBees AWS CLI Plugin
 
-# Required tools
+# Required agent tools
 - Maven
 - Java
 - Git
@@ -36,3 +35,5 @@ This demo will show how to set up a Docker-based build and deploy pipeline in Je
 # Additional Reading
 - [How to point to a custom registry (e.g. local)](http://documentation.cloudbees.com/docs/cje-user-guide/docker-workflow.html)
 - [Setting up Jenkins slaves on AWS](https://www.cloudbees.com/blog/setting-jenkins-ec2-slaves)
+- [Game of Life pipeline deployment to ECS](https://github.com/cyrille-leclerc/game-of-life/blob/amazon-ecs-pipeline/Jenkinsfile)
+- [Alternative approach to build pipeline with Jenkins and ECS](https://blogs.aws.amazon.com/application-management/post/Tx32RHFZHXY6ME1/Set-up-a-build-pipeline-with-Jenkins-and-Amazon-ECS)
