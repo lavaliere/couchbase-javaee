@@ -28,10 +28,10 @@ node ('ec2'){
   def buildenv = docker.image('cloudbees/java-build-tools:0.0.7.1')
   buildenv.inside {
     wrap([$class: 'AmazonAwsCliBuildWrapper', credentialsId: '20f6b2e4-7fbe-4655-8b4b-9842ec81bce2', defaultRegion: 'us-east-1']) {
-        sh "aws ecs update-service --service staging --desired-count 0"
+        sh "aws ecs update-service --service staging-couchbase  --cluster staging --desired-count 0"
         timeout(time: 5, unit: 'MINUTES') {
             waitUntil {
-                sh "aws ecs describe-services --services staging > .amazon-ecs-service-status.json"
+                sh "aws ecs describe-services --services staging-couchbase  --cluster staging  > .amazon-ecs-service-status.json"
 
                 // parse `describe-services` output
                 def ecsServicesStatusAsJson = readFile(".amazon-ecs-service-status.json")
@@ -41,10 +41,10 @@ node ('ec2'){
                 return ecsServiceStatus.get('runningCount') == 0 && ecsServiceStatus.get('status') == "ACTIVE"
             }
         }
-        sh "aws ecs update-service --service staging --desired-count 1"
+        sh "aws ecs update-service --service staging-couchbase  --cluster staging --desired-count 1"
         timeout(time: 5, unit: 'MINUTES') {
             waitUntil {
-                sh "aws ecs describe-services --services staging > .amazon-ecs-service-status.json"
+                sh "aws ecs describe-services --services staging-couchbase --cluster staging > .amazon-ecs-service-status.json"
 
                 // parse `describe-services` output
                 def ecsServicesStatusAsJson = readFile(".amazon-ecs-service-status.json")
@@ -75,3 +75,4 @@ node ('ec2'){
   //deploy new container
 
 }
+
